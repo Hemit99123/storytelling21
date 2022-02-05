@@ -194,3 +194,16 @@ textarea {
 .black {
   color: black;
 }
+
+@media only screen and (min-width: 375px) and (max-width: 812px) {
+  .homePage .post {
+    width: 150px;
+    height: auto;
+    max-height: 600px;
+    background-color: rgb(250, 250, 250);
+    box-shadow: rgba(0, 0, 0, 0.671) 0px 3px 8px;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 15px;
+  }
+}
