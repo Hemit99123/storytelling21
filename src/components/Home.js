@@ -1,4 +1,4 @@
-import {auth, provider, provider2, db} from './Firebase/firebase'
+import {auth, provider, db} from './Firebase/firebase'
 import {
   collection,
   query,
@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore";
 import { signInWithPopup, signOut, onAuthStateChanged,  } from 'firebase/auth';
 import { useEffect, useState } from 'react';
-import { GoogleLoginButton, FacebookLoginButton } from 'react-social-login-buttons';
+import { GoogleLoginButton } from 'react-social-login-buttons';
 import {Input, Button} from '@material-ui/core'
 import './App.css'
 
@@ -129,13 +129,20 @@ const getPost = async () => {
       <h1>Welcome {name}!</h1>
       <h3>500 lines of code were written for this project!</h3>
       <div className="homePage">
-      <Button variant="secondary" onClick={signUserOut}>Sign Out</Button>
+      <Button 
+      fullWidth 
+      onClick={signUserOut}
+      >
+        Sign Out
+    </Button>
+
       <br />
       <label> Story:</label>
       <br />
       <br />
       <br />
           <Input
+            fullWidth
             multiline
             placeholder="Your story goes here..."
             onChange={(event) => {
