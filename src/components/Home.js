@@ -161,9 +161,6 @@ const getPost = async () => {
     <GoogleLoginButton onClick={signInWithGoogle}>
       <span>Sign In</span>
     </GoogleLoginButton>
-    <FacebookLoginButton onClick={signInWithFaceBook}>
-      <span>Sign In</span>
-    </FacebookLoginButton>
 
     </div>
 
