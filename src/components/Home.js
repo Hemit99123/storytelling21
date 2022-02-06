@@ -63,7 +63,8 @@ const makeStory = async () => {
         uid: auth.currentUser.uid,
         displayName: auth.currentUser.displayName,
         content,
-        time: moment().format('MMMM Do YYYY, h:mm a')
+        time: moment().format('MMMM Do YYYY, h:mm a'),
+        title
     })
     window.location.reload()
 }
@@ -97,11 +98,13 @@ const getPost = async () => {
 
   const updatePost = async (id) => {
     const postDoc = doc(db, "posts", id);
-    const content = prompt('Update posts')
+    const title = prompt('Update title')
+    const content = prompt('Update content')
     await updateDoc(postDoc, {
       uid: auth.currentUser.uid,
       displayName: auth.currentUser.displayName,
       content,
+      time: "Edited at " + moment().format('MMMM Do YYYY, h:mm a'),
       title
     });
   };
@@ -116,11 +119,14 @@ const getPost = async () => {
           <div className='post'>
           
           <a href={link}>
-              <div className='black'>
+              <div className='postTextContainer'>
                   <p>@{results.displayName}</p>
               </div>
           </a>
           <span>{results.time}</span>
+          <br />
+          <br />
+          <h2>{results.title}</h2>
             Story:
             <div className="postTextContainer"> {results.content} </div>
             {results.uid === auth.currentUser.uid && (
@@ -175,13 +181,21 @@ const getPost = async () => {
         <Input
             fullWidth
             multiline
+            placeholder="Your title goes here..."
+            onChange={(event) => {
+              setTitle(event.target.value);
+            }}
+          />
+          <br />
+          <br />
+          <Input
+            fullWidth
+            multiline
             placeholder="Your story goes here..."
             onChange={(event) => {
               setContent(event.target.value);
             }}
           />
-          <br />
-          <br />
         
         <Button onClick={makeStory}>Submit story</Button>
         <br />

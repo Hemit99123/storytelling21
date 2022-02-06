@@ -87,7 +87,7 @@ function UserPage() {
         <div className='post'>
 
 <a>
-<div className="black">
+<div className="postTextContainer">
                 <p>@{results.displayName}</p>
             </div>
 </a>
