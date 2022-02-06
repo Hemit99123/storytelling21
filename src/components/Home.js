@@ -127,7 +127,6 @@ const getPost = async () => {
     return (
       <div>
       <h1>Welcome {name}!</h1>
-      <h3>500 lines of code were written for this project!</h3>
       <div className="homePage">
       <Button 
       fullWidth 
