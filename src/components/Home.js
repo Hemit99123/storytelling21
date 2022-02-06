@@ -9,7 +9,7 @@ import {
   doc,
   updateDoc
 } from "firebase/firestore";
-import { signInWithPopup, signOut, onAuthStateChanged,  } from 'firebase/auth';
+import {signOut, onAuthStateChanged, signInWithRedirect,  } from 'firebase/auth';
 import { useEffect, useState } from 'react';
 import { GoogleLoginButton } from 'react-social-login-buttons';
 import {Input, Button} from '@material-ui/core'
@@ -35,7 +35,7 @@ function App() {
 
   const signInWithGoogle = async () => {
     try {
-      const res = await signInWithPopup(auth, provider);
+      const res = await signInWithRedirect(auth, provider);
       const user = res.user;
       const q = query(collection(db, "users"), where("uid", "==", user.uid));
       const docs = await getDocs(q);
