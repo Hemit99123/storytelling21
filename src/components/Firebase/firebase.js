@@ -6,12 +6,13 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyDh7lpH4-atZ1nNXOrlgxJLockCEi-_2Sc",
-    authDomain: "storytelling-edf7e.firebaseapp.com",
-    projectId: "storytelling-edf7e",
-    storageBucket: "storytelling-edf7e.appspot.com",
-    messagingSenderId: "967786761331",
-    appId: "1:967786761331:web:af3e3190e9b0400869ae06"
+    apiKey: "AIzaSyAUeZnvEoR09jy_UcrubVhz9_anHQoARes",
+    authDomain: "storytelling21-43842.firebaseapp.com",
+    projectId: "storytelling21-43842",
+    storageBucket: "storytelling21-43842.appspot.com",
+    messagingSenderId: "560010805607",
+    appId: "1:560010805607:web:a39d4ed2827925746fefc2",
+    measurementId: "G-KK56HRS8L1"
 };
 
 // Initialize Firebase
