@@ -4,7 +4,6 @@ import {
   query,
   where,
   getDocs,
-  addDoc,
   deleteDoc,
   doc,
   updateDoc
@@ -13,13 +12,13 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {Button} from '@material-ui/core'
 import { onAuthStateChanged } from 'firebase/auth';
+import moment from 'moment'
 import './App.css'
 
 
 function UserPage() {
   const  { uid } = useParams()
   const [results, setResults] = useState([])
-  const [user, setUser] = useState([])
   const [auth_, setAuth_] = useState()
 
 
@@ -44,24 +43,9 @@ function UserPage() {
 
   };
 
-  const QueryDataUsers = async () => {
-    const collectionRef = collection(db, "users");
-    const q = query(collectionRef, where("uid", "==", uid));
-    const snapshot = await getDocs(q);
-  
-    const results = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-
-    setUser(results)
-
-  };
-
-
   useEffect(() => {
     QueryData()
 
-  })
-  useEffect(() => {
-    QueryDataUsers()
   })
 
 
@@ -72,13 +56,26 @@ function UserPage() {
   
     const updatePost = async (id) => {
       const postDoc = doc(db, "posts", id);
+      const title = prompt('Update title')
       const content = prompt('Update posts')
       await updateDoc(postDoc, {
         uid: auth.currentUser.uid,
         displayName: auth.currentUser.displayName,
-        content
+        content,
+        title,
+        time: "Edited at " + moment().format('MMMM Do YYYY, h:mm a')
       });
     };
+
+    const ifstatment = () => {
+      if (auth_ === false){
+        window.location.replace("/")
+      }
+    }
+
+    useEffect(() => {
+      ifstatment()
+    })
 
 
   const results_map = results.map((results)=>{ 
@@ -86,7 +83,7 @@ function UserPage() {
         <div key={results.id} className='homePage'>
         <div className='post'>
 
-<a>
+<a href={"/"}> 
 <div className="postTextContainer">
                 <p>@{results.displayName}</p>
             </div>
@@ -95,6 +92,7 @@ function UserPage() {
         <span>{results.time}</span>
         <br />
         <br />
+        <h2>{results.title}</h2>
           Story:
           <div className="postTextContainer"> {results.content} </div>
           {results.uid === auth.currentUser.uid && (
@@ -122,23 +120,13 @@ function UserPage() {
     )
 });
 
-const user_map = user.map((user)=>{ 
-  return (
-      <div key={user.id}>
 
-        <h3>{user.name}</h3>
-        <h4>{user.uid}</h4>
-
-    </div>
-  )
-});
 
 
   return (
     <div>
-        {user_map}
 
-        <h1>Users Posts:</h1>
+        <h1>User {uid} posts:</h1>
         {results_map}
     </div>
 

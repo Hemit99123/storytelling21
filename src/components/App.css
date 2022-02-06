@@ -124,13 +124,14 @@ textarea {
 }
 
 .homePage .post {
-  width: auto;
+  width: 600px;
   height: auto;
   background-color: rgb(250, 250, 250);
   box-shadow: rgba(0, 0, 0, 0.671) 0px 3px 8px;
   margin: 20px;
   padding: 20px;
   border-radius: 15px;
+
 }
 
 
@@ -141,5 +142,18 @@ textarea {
   overflow: hidden;
   overflow-y: auto;
   color: black;
+
 }
 
+@media screen and (max-width: 500px) {
+  .homePage .post {
+    width: 300px;
+    height: auto;
+    background-color: rgb(250, 250, 250);
+    box-shadow: rgba(0, 0, 0, 0.671) 0px 3px 8px;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 15px;
+  
+  }
+}
