@@ -126,7 +126,6 @@ textarea {
 .homePage .post {
   width: auto;
   height: auto;
-  max-height: 600px;
   background-color: rgb(250, 250, 250);
   box-shadow: rgba(0, 0, 0, 0.671) 0px 3px 8px;
   margin: 20px;
@@ -138,7 +137,6 @@ textarea {
 .post .postTextContainer {
   word-wrap: break-word;
   height: auto;
-  max-height: 400px;
   width: 100%;
   overflow: hidden;
   overflow-y: auto;
