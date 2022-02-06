@@ -61,7 +61,8 @@ const makeStory = async () => {
     await addDoc(collection(db, "posts") , {
         uid: auth.currentUser.uid,
         displayName: auth.currentUser.displayName,
-        content
+        content,
+        time: moment().format('MMMM Do YYYY, h:mm a')
     })
     window.location.reload()
 }

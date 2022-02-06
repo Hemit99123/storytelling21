@@ -17,7 +17,7 @@ export default function App() {
     <div>
       <nav>
 
-          <Link to="/">Storytelling21</Link>
+          <Link to="/">StoryTelling21</Link>
 
 
       </nav>
