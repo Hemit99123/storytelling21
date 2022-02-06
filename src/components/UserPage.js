@@ -9,7 +9,7 @@ import {
   doc,
   updateDoc
 } from "firebase/firestore";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {Button} from '@material-ui/core'
 import { onAuthStateChanged } from 'firebase/auth';
@@ -56,9 +56,14 @@ function UserPage() {
   };
 
 
-
+  useEffect(() => {
     QueryData()
+
+  })
+  useEffect(() => {
     QueryDataUsers()
+  })
+
 
     const deletePost = async (id) => {
       const postDoc = doc(db, "posts", id);
