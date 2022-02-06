@@ -74,9 +74,7 @@ const getPost = async () => {
     setResults(data)
   }
   
-  useEffect(() => {
     getPost()
-  })
 
   const signUserOut = () => {
       signOut(auth).then(() => {
