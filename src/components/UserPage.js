@@ -86,9 +86,12 @@ function UserPage() {
         <div key={results.id} className='homePage'>
         <div className='post'>
 
-            <div className="black">
+<a>
+<div className="black">
                 <p>@{results.displayName}</p>
             </div>
+</a>
+
         <h1>{results.title}</h1>
           Story:
           <div className="postTextContainer"> {results.content} </div>
