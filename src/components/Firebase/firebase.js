@@ -11,8 +11,8 @@ const firebaseConfig = {
     projectId: "storytelling21-43842",
     storageBucket: "storytelling21-43842.appspot.com",
     messagingSenderId: "560010805607",
-    appId: "1:560010805607:web:a39d4ed2827925746fefc2",
-    measurementId: "G-KK56HRS8L1"
+    appId: "1:560010805607:web:70b1faee6b4105a56fefc2",
+    measurementId: "G-R7G8Q47654"
 };
 
 // Initialize Firebase
