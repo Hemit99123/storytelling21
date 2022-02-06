@@ -120,10 +120,10 @@ const getPost = async () => {
                   <p>@{results.displayName}</p>
               </div>
           </a>
-          <span>{results.time}</span>
+          <span className='postTextContainer'>{results.time}</span>
           <br />
           <br />
-          <h2>{results.title}</h2>
+          <h2 className='postTextContainer'>{results.title}</h2>
             Story:
             <div className="postTextContainer"> {results.content} </div>
             {results.uid === auth.currentUser.uid && (
