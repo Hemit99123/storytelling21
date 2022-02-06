@@ -93,6 +93,8 @@ function UserPage() {
 </a>
 
         <span>{results.time}</span>
+        <br />
+        <br />
           Story:
           <div className="postTextContainer"> {results.content} </div>
           {results.uid === auth.currentUser.uid && (
