@@ -6,7 +6,8 @@ import {
   getDocs,
   addDoc,
   deleteDoc,
-  doc
+  doc,
+  updateDoc
 } from "firebase/firestore";
 import { signInWithPopup, signOut, onAuthStateChanged,  } from 'firebase/auth';
 import { useEffect, useState } from 'react';
@@ -61,6 +62,7 @@ const makeStory = async () => {
         displayName: auth.currentUser.displayName,
         content
     })
+    window.location.reload()
 }
 
 
@@ -89,6 +91,16 @@ const getPost = async () => {
     await deleteDoc(postDoc);
   };
 
+  const updatePost = async (id) => {
+    const postDoc = doc(db, "posts", id);
+    const content = prompt('Update posts')
+    await updateDoc(postDoc, {
+      uid: auth.currentUser.uid,
+      displayName: auth.currentUser.displayName,
+      content
+    });
+  };
+
 
 
   if (auth_ === true){
@@ -106,6 +118,7 @@ const getPost = async () => {
             Story:
             <div className="postTextContainer"> {results.content} </div>
             {results.uid === auth.currentUser.uid && (
+              <div>
                     <Button
                       onClick={() => {
                         deletePost(results.id);
@@ -113,6 +126,15 @@ const getPost = async () => {
                     >
                       Delete Post
                     </Button>
+                    <Button
+                    onClick={() => {
+                      updatePost(results.id);
+                    }}
+                  >
+                    Update Post
+                  </Button>
+                </div>
+                    
           )}
           </div>
   
@@ -127,6 +149,9 @@ const getPost = async () => {
     return (
       <div>
       <h1>Welcome {name}!</h1>
+      <a href={'/users/' + auth.currentUser.uid}>
+        <Button>Go to your userpage</Button>
+      </a>
       <div className="homePage">
       <Button 
       fullWidth 

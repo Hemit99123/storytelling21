@@ -1,13 +1,18 @@
-import {db} from './Firebase/firebase'
+import {db, auth} from './Firebase/firebase'
 import {
   collection,
   query,
   where,
-  getDocs
+  getDocs,
+  addDoc,
+  deleteDoc,
+  doc,
+  updateDoc
 } from "firebase/firestore";
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {Button} from '@material-ui/core'
+import { onAuthStateChanged } from 'firebase/auth';
 import './App.css'
 
 
@@ -15,6 +20,16 @@ function UserPage() {
   const  { uid } = useParams()
   const [results, setResults] = useState([])
   const [user, setUser] = useState([])
+  const [auth_, setAuth_] = useState()
+
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setAuth_(true)
+    } else {
+      setAuth_(false)
+    }
+  });
 
   const QueryData = async () => {
     const collectionRef = collection(db, "posts");
@@ -45,6 +60,21 @@ function UserPage() {
     QueryData()
     QueryDataUsers()
 
+    const deletePost = async (id) => {
+      const postDoc = doc(db, "posts", id);
+      await deleteDoc(postDoc);
+    };
+  
+    const updatePost = async (id) => {
+      const postDoc = doc(db, "posts", id);
+      const content = prompt('Update posts')
+      await updateDoc(postDoc, {
+        uid: auth.currentUser.uid,
+        displayName: auth.currentUser.displayName,
+        content
+      });
+    };
+
 
   const results_map = results.map((results)=>{ 
     const link = "http://localhost:3000/users/" + results.uid
@@ -59,6 +89,25 @@ function UserPage() {
         </a>
           Story:
           <div className="postTextContainer"> {results.content} </div>
+          {results.uid === auth.currentUser.uid && (
+              <div>
+                    <Button
+                      onClick={() => {
+                        deletePost(results.id);
+                      }}
+                    >
+                      Delete Post
+                    </Button>
+                    <Button
+                    onClick={() => {
+                      updatePost(results.id);
+                    }}
+                  >
+                    Update Post
+                  </Button>
+                </div>
+                    
+          )}
         </div>
 
       </div>
@@ -80,9 +129,6 @@ const user_map = user.map((user)=>{
   return (
     <div>
         {user_map}
-        <a href="/">
-        <Button>Go back to homepage</Button>
-        </a>
 
         <h1>Users Posts:</h1>
         {results_map}
