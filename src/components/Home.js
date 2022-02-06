@@ -54,30 +54,6 @@ function App() {
     }
   };
 
-  const signInWithGithub = async () => {
-    try {
-      const res = await signInWithRedirect(auth, provider2);
-      const user = res.user;
-      const q = query(collection(db, "users"), where("uid", "==", user.uid));
-      const docs = await getDocs(q);
-      if (docs.docs.length === 0) {
-        await addDoc(collection(db, "users"), {
-          uid: user.uid,
-          name: user.displayName,
-          authProvider: "github-provider",
-        });
-      }
-    } catch (err) {
-      console.error(err);
-      alert(err.message);
-    }
-  };
-
-
-
-
-
-
 
 const makeStory = async () => {
     await addDoc(collection(db, "posts") , {
@@ -235,9 +211,6 @@ const getPost = async () => {
       <span>Sign In</span>
     </GoogleLoginButton>
 
-    <GithubLoginButton onClick={signInWithGithub}>
-      <span>Sign In</span>
-    </GithubLoginButton>
 
     </div>
 
