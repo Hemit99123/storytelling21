@@ -11,7 +11,7 @@ import {
 } from "firebase/firestore";
 import {signOut, onAuthStateChanged, signInWithRedirect,  } from 'firebase/auth';
 import { useEffect, useState } from 'react';
-import { GoogleLoginButton, FacebookLoginButton } from 'react-social-login-buttons';
+import { GoogleLoginButton, GithubLoginButton} from 'react-social-login-buttons';
 import {Input, Button} from '@material-ui/core'
 import moment from 'moment'
 import './App.css'
@@ -54,7 +54,7 @@ function App() {
     }
   };
 
-  const signInWithFB = async () => {
+  const signInWithGithub = async () => {
     try {
       const res = await signInWithRedirect(auth, provider2);
       const user = res.user;
@@ -73,6 +73,8 @@ function App() {
       alert(err.message);
     }
   };
+
+
 
 
 
@@ -234,9 +236,9 @@ const getPost = async () => {
       <span>Sign In</span>
     </GoogleLoginButton>
 
-    <FacebookLoginButton onClick={signInWithFB}>
+    <GithubLoginButton onClick={signInWithGithub}>
       <span>Sign In</span>
-    </FacebookLoginButton>
+    </GithubLoginButton>
 
     </div>
 
