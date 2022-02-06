@@ -82,16 +82,14 @@ function UserPage() {
 
 
   const results_map = results.map((results)=>{ 
-    const link = "http://localhost:3000/users/" + results.uid
     return (
         <div key={results.id} className='homePage'>
         <div className='post'>
-        
-        <a href={link}>
+
             <div className="black">
                 <p>@{results.displayName}</p>
             </div>
-        </a>
+        <h1>{results.title}</h1>
           Story:
           <div className="postTextContainer"> {results.content} </div>
           {results.uid === auth.currentUser.uid && (

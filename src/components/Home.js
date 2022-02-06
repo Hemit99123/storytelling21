@@ -21,6 +21,7 @@ function App() {
   const [name, setName] = useState('')
   const [results, setResults] = useState([])
   const [content, setContent] = useState('')
+  const [title, setTitle] = useState('')
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -98,7 +99,8 @@ const getPost = async () => {
     await updateDoc(postDoc, {
       uid: auth.currentUser.uid,
       displayName: auth.currentUser.displayName,
-      content
+      content,
+      title
     });
   };
 
@@ -116,6 +118,7 @@ const getPost = async () => {
                   <p>@{results.displayName}</p>
               </div>
           </a>
+          <h1>{results.title}</h1>
             Story:
             <div className="postTextContainer"> {results.content} </div>
             {results.uid === auth.currentUser.uid && (
@@ -166,7 +169,8 @@ const getPost = async () => {
       <br />
       <br />
       <br />
-          <Input
+
+        <Input
             fullWidth
             multiline
             placeholder="Your story goes here..."
@@ -174,9 +178,9 @@ const getPost = async () => {
               setContent(event.target.value);
             }}
           />
-
-        <br />
-        <br />
+          <br />
+          <br />
+        
         <Button onClick={makeStory}>Submit story</Button>
         <br />
         {results_map}
