@@ -1,4 +1,4 @@
-import {auth, provider, db} from './Firebase/firebase'
+import {auth, provider, db, provider2} from './Firebase/firebase'
 import {
   collection,
   query,
@@ -11,7 +11,7 @@ import {
 } from "firebase/firestore";
 import {signOut, onAuthStateChanged, signInWithRedirect,  } from 'firebase/auth';
 import { useEffect, useState } from 'react';
-import { GoogleLoginButton } from 'react-social-login-buttons';
+import { GoogleLoginButton, FacebookLoginButton } from 'react-social-login-buttons';
 import {Input, Button} from '@material-ui/core'
 import moment from 'moment'
 import './App.css'
@@ -37,6 +37,26 @@ function App() {
   const signInWithGoogle = async () => {
     try {
       const res = await signInWithRedirect(auth, provider);
+      const user = res.user;
+      const q = query(collection(db, "users"), where("uid", "==", user.uid));
+      const docs = await getDocs(q);
+      if (docs.docs.length === 0) {
+        await addDoc(collection(db, "users"), {
+          uid: user.uid,
+          name: user.displayName,
+          authProvider: "google-provider",
+          email: user.email,
+        });
+      }
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
+    }
+  };
+
+  const signInWithFB = async () => {
+    try {
+      const res = await signInWithRedirect(auth, provider2);
       const user = res.user;
       const q = query(collection(db, "users"), where("uid", "==", user.uid));
       const docs = await getDocs(q);
@@ -213,6 +233,10 @@ const getPost = async () => {
     <GoogleLoginButton onClick={signInWithGoogle}>
       <span>Sign In</span>
     </GoogleLoginButton>
+
+    <FacebookLoginButton onClick={signInWithFB}>
+      <span>Sign In</span>
+    </FacebookLoginButton>
 
     </div>
 
