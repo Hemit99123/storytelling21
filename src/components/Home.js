@@ -93,6 +93,7 @@ const getPost = async () => {
     await deleteDoc(postDoc);
   };
 
+
   const updatePost = async (id) => {
     const postDoc = doc(db, "posts", id);
     const title = prompt('Update title')
@@ -166,8 +167,7 @@ const getPost = async () => {
       fullWidth 
       onClick={signUserOut}
       >
-        Sign Out
-    </Button>
+        Sign Out    </Button>
 
       <br />
       <label> Story:</label>
