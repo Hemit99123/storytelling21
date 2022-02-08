@@ -125,8 +125,7 @@ function UserPage() {
 
   return (
     <div>
-
-        <h1>User {uid} posts:</h1>
+        <h3>User {uid}'s posts</h3>
         {results_map}
     </div>
 

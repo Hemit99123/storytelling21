@@ -26,67 +26,6 @@ a {
   font-size: 25px;
 }
 
-.createPostPage {
-  width: 100%;
-  height: calc(100vh - 80px);
-  display: grid;
-  place-items: center;
-}
-
-.cpContainer {
-  width: 500px;
-  height: auto;
-  padding: 20px;
-  background-color: black;
-  border-radius: 12px;
-  color: white;
-  display: flex;
-  flex-direction: column;
-}
-
-.cpContainer h1 {
-  text-align: center;
-}
-
-.cpContainer label {
-  font-size: 25px;
-}
-.cpContainer .inputGp {
-  margin-top: 30px;
-  display: flex;
-  flex-direction: column;
-}
-
-.inputGp input,
-.inputGp textarea {
-  font-size: 18px;
-  border: none;
-  border-radius: 2px;
-  padding: 5px;
-}
-
-.inputGp input {
-  height: 40px;
-}
-.inputGp textarea {
-  height: 150px;
-}
-
-.cpContainer button {
-  margin-top: 20px;
-  height: 40px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 18px;
-}
-input,
-textarea {
-  margin-top: 5px;
-}
-
-
-
 .homePage {
   width: 100%;
   min-height: calc(100vh - 80px);
@@ -115,19 +54,23 @@ textarea {
   align-items: flex-end;
 }
 
-.deletePost button {
-  border: none;
-
-  background: none;
-  font-size: 30px;
-  cursor: pointer;
-}
-
 .homePage .post {
   width: 600px;
   height: auto;
   background-color: rgb(250, 250, 250);
-  box-shadow: rgba(0, 0, 0, 0.671) 0px 3px 8px;
+  box-shadow: rgba(0, 0, 0, 0.425) 0px 3px 8px;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 15px;
+  transition-duration: 0.4s;
+
+}
+
+.homePage .post:hover {
+  width: 600px;
+  height: auto;
+  background-color: rgb(250, 250, 250);
+  box-shadow: rgba(0, 0, 0, 0.932) 0px 3px 8px;
   margin: 20px;
   padding: 20px;
   border-radius: 15px;
@@ -150,7 +93,18 @@ textarea {
     width: 300px;
     height: auto;
     background-color: rgb(250, 250, 250);
-    box-shadow: rgba(0, 0, 0, 0.671) 0px 3px 8px;
+    box-shadow: rgba(0, 0, 0, 0.425) 0px 3px 8px;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 15px;
+    transition-duration: 0.4s;
+  
+  }
+  .homePage .post:hover {
+    width: 300px;
+    height: auto;
+    background-color: rgb(250, 250, 250);
+    box-shadow: rgba(0, 0, 0, 0.932) 0px 3px 8px;
     margin: 20px;
     padding: 20px;
     border-radius: 15px;

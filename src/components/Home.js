@@ -1,8 +1,6 @@
 import {auth, provider, db} from './Firebase/firebase'
 import {
   collection,
-  query,
-  where,
   getDocs,
   addDoc,
   deleteDoc,
@@ -36,18 +34,7 @@ function App() {
 
   const signInWithGoogle = async () => {
     try {
-      const res = await signInWithRedirect(auth, provider);
-      const user = res.user;
-      const q = query(collection(db, "users"), where("uid", "==", user.uid));
-      const docs = await getDocs(q);
-      if (docs.docs.length === 0) {
-        await addDoc(collection(db, "users"), {
-          uid: user.uid,
-          name: user.displayName,
-          authProvider: "google-provider",
-          email: user.email,
-        });
-      }
+      await signInWithRedirect(auth, provider);
     } catch (err) {
       console.error(err);
       alert(err.message);
@@ -63,6 +50,7 @@ const makeStory = async () => {
         time: moment().format('MMMM Do YYYY, h:mm a'),
         title
     })
+    alert('post has been added sucessfully')
     window.location.reload()
 }
 
@@ -91,6 +79,7 @@ const getPost = async () => {
   const deletePost = async (id) => {
     const postDoc = doc(db, "posts", id);
     await deleteDoc(postDoc);
+    alert('post has been deleted sucessfully!')
   };
 
 
