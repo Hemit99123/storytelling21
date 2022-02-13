@@ -17,15 +17,12 @@ import './App.css'
 
 function App() {
   const [auth_,setAuth_] = useState('')
-  const [name, setName] = useState('')
   const [results, setResults] = useState([])
-  const [content, setContent] = useState('')
-  const [title, setTitle] = useState('')
+  const [content, setContent] = useState(null)
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
       setAuth_(true)
-      setName(user.displayName)
     } else {
       setAuth_(false)
     }
@@ -43,14 +40,17 @@ function App() {
 
 
 const makeStory = async () => {
+    if (content === null){
+      alert('err: null')
+      return;
+    } 
     await addDoc(collection(db, "posts") , {
         uid: auth.currentUser.uid,
         displayName: auth.currentUser.displayName,
         content,
         time: moment().format('MMMM Do YYYY, h:mm a'),
-        title
     })
-    alert('post has been added sucessfully')
+    alert('post has been created sucessfully')
     window.location.reload()
 }
 
@@ -76,7 +76,7 @@ const getPost = async () => {
       })
   }
 
-  const deletePost = async (id) => {
+  const deletePost = async (id, title_ , content_) => {
     const postDoc = doc(db, "posts", id);
     await deleteDoc(postDoc);
     alert('post has been deleted sucessfully!')
@@ -85,15 +85,20 @@ const getPost = async () => {
 
   const updatePost = async (id) => {
     const postDoc = doc(db, "posts", id);
-    const title = prompt('Update title')
-    const content = prompt('Update content')
+    var content = prompt('Update content')
+
+    if (content === null){
+      // breaking the function earlier if they press cancel.
+      return;  
+    }
+
     await updateDoc(postDoc, {
       uid: auth.currentUser.uid,
       displayName: auth.currentUser.displayName,
       content,
-      time: "Edited at " + moment().format('MMMM Do YYYY, h:mm a'),
-      title
+      time: "Edited at " + moment().format('MMMM Do YYYY, h:mm a')
     });
+    alert('post has been updated sucessfully')
   };
 
 
@@ -113,7 +118,6 @@ const getPost = async () => {
           <span className='postTextContainer'>{results.time}</span>
           <br />
           <br />
-          <h2 className='postTextContainer'>{results.title}</h2>
             Story:
             <div className="postTextContainer"> {results.content} </div>
             {results.uid === auth.currentUser.uid && (
@@ -147,7 +151,7 @@ const getPost = async () => {
   
     return (
       <div>
-      <h1>Welcome {name}!</h1>
+      <h1>Welcome {auth.currentUser.displayName}!</h1>
       <a href={'/users/' + auth.currentUser.uid}>
         <Button>Go to your userpage</Button>
       </a>
@@ -164,14 +168,6 @@ const getPost = async () => {
       <br />
       <br />
 
-        <Input
-            fullWidth
-            multiline
-            placeholder="Your title goes here..."
-            onChange={(event) => {
-              setTitle(event.target.value);
-            }}
-          />
           <br />
           <br />
           <Input
@@ -190,7 +186,7 @@ const getPost = async () => {
       </div>
     )
   } else{
-
+    // do nothing because the google sign-in button has to show
   }
 
   return (

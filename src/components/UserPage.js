@@ -43,6 +43,8 @@ function UserPage() {
 
   };
 
+
+
   useEffect(() => {
     QueryData()
 
@@ -52,25 +54,29 @@ function UserPage() {
     const deletePost = async (id) => {
       const postDoc = doc(db, "posts", id);
       await deleteDoc(postDoc);
+      alert('post has been deleted successfully')
     };
   
     const updatePost = async (id) => {
       const postDoc = doc(db, "posts", id);
-      const title = prompt('Update title')
       const content = prompt('Update posts')
+      if (content === null){
+        return; // breaking the function earlier if they press cancel because cancel returns null
+      }
       await updateDoc(postDoc, {
         uid: auth.currentUser.uid,
         displayName: auth.currentUser.displayName,
         content,
-        title,
         time: "Edited at " + moment().format('MMMM Do YYYY, h:mm a')
       });
+      alert('post has been updated sucessfully')
     };
 
     const ifstatment = () => {
       if (auth_ === false){
         window.location.replace("/")
       }
+
     }
 
     useEffect(() => {
@@ -92,7 +98,6 @@ function UserPage() {
         <span>{results.time}</span>
         <br />
         <br />
-        <h2>{results.title}</h2>
           Story:
           <div className="postTextContainer"> {results.content} </div>
           {results.uid === auth.currentUser.uid && (
