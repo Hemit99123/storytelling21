@@ -6,6 +6,7 @@
 #### npm install react-copy-to-clipboard
 #### npm install @material-ui/core
 #### npm install react-router-dom@5.2.0
+#### npm install react-social-login-buttons
 
 Hope you like this project. It has a total of about 570 lines of code and is my biggest project to date as of 2022-06-20. 
 
