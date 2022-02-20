@@ -8,6 +8,8 @@ import {
 
 import Home from './components/Home'
 import UserPage from './components/UserPage'
+import NotFound from "./components/NotFound";
+import CommentPage from "./components/CommentPage"
 
 export default function App() {
 
@@ -25,12 +27,16 @@ export default function App() {
       {/* A <Switch> looks through its children <Route>s and
           renders the first one that matches the current URL. */}
       <Switch>
-        <Route path="/users/:uid">
+        <Route exact path="/users/:uid">
           <UserPage/>
         </Route>
-        <Route path="/">
+        <Route exact path="/">
           <Home />
         </Route>
+        <Route exact path="/comments/:id">
+          <CommentPage />
+        </Route>
+        <Route component={NotFound} />
       </Switch>
     </div>
   </Router>
