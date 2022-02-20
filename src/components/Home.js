@@ -5,13 +5,16 @@ import {
   addDoc,
   deleteDoc,
   doc,
-  updateDoc
+  updateDoc,
+  query,
+  where
 } from "firebase/firestore";
 import {signOut, onAuthStateChanged, signInWithRedirect,  } from 'firebase/auth';
 import { useEffect, useState } from 'react';
 import { GoogleLoginButton} from 'react-social-login-buttons';
 import {Input, Button} from '@material-ui/core'
 import moment from 'moment'
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 import './App.css'
 
 
@@ -44,14 +47,30 @@ const makeStory = async () => {
       alert('err: null')
       return;
     } 
+    alert('post has been created sucessfully')
     await addDoc(collection(db, "posts") , {
         uid: auth.currentUser.uid,
         displayName: auth.currentUser.displayName,
         content,
         time: moment().format('MMMM Do YYYY, h:mm a'),
     })
-    alert('post has been created sucessfully')
     window.location.reload()
+}
+
+const makeComment = async (id) => {
+  const content = prompt('Add comment')
+  if (content === null){
+    return;
+  } 
+  alert('post has been created sucessfully')
+  await addDoc(collection(db, "comments") , {
+      uid: auth.currentUser.uid,
+      displayName: auth.currentUser.displayName,
+      content,
+      id,
+      time: moment().format('MMMM Do YYYY, h:mm a'),
+  })
+  window.location.replace('/comments/' + id)
 }
 
 
@@ -76,10 +95,22 @@ const getPost = async () => {
       })
   }
 
-  const deletePost = async (id, title_ , content_) => {
+
+  const deletePost = async (id) => {
+    alert('post has been deleted sucessfully!')
     const postDoc = doc(db, "posts", id);
     await deleteDoc(postDoc);
-    alert('post has been deleted sucessfully!')
+    const collectionRef = collection(db, "comments");
+    const q = query(collectionRef, where("id", "==", id));
+    const snapshot = await getDocs(q);
+  
+    const results = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+  
+    results.forEach(async (results) => {
+      const docRef = doc(db, "comments", results.id);
+      await deleteDoc(docRef);
+    });
+
   };
 
 
@@ -92,24 +123,32 @@ const getPost = async () => {
       return;  
     }
 
+    alert('post has been updated sucessfully')
+
     await updateDoc(postDoc, {
       uid: auth.currentUser.uid,
       displayName: auth.currentUser.displayName,
       content,
       time: "Edited at " + moment().format('MMMM Do YYYY, h:mm a')
     });
-    alert('post has been updated sucessfully')
   };
+
+  const goToComments = (id) => {
+    window.location.replace('/comments/'+id)
+  }
 
 
 
   if (auth_ === true){
     const results_map = results.map((results)=>{ 
       const link = "/users/" + results.uid
+      const copyText = "'" + results.content + "' " + ' this was made on Storytelling21 by ' + results.displayName
       return (
           <div key={results.id} className='homePage'>
           <div className='post'>
-          
+          <p>Post ID:</p>
+          <br />
+          <p>{results.id}</p>
           <a href={link}>
               <div className='postTextContainer'>
                   <p>@{results.displayName}</p>
@@ -120,6 +159,14 @@ const getPost = async () => {
           <br />
             Story:
             <div className="postTextContainer"> {results.content} </div>
+            <CopyToClipboard 
+            text={copyText}
+            onCopy={() => alert('text has been copied to clipboard')}
+            >
+         <Button>Copy to clipboard</Button>
+        </CopyToClipboard>
+        <Button onClick={() => {makeComment(results.id)}}>Create comment</Button>
+        <Button onClick={() => {goToComments(results.id)}}>View comments! 🔥</Button>
             {results.uid === auth.currentUser.uid && (
               <div>
                     <Button
