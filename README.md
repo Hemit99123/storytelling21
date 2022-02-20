@@ -11,6 +11,6 @@ Hope you like this project. It has a total of about 570 lines of code and is my 
 
 # Live demo
 
-https://www.storytelling21.herokuapp.com
+https://storytelling21.herokuapp.com
 
 I used heroku to host my website!!
